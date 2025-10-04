@@ -1,6 +1,7 @@
 *_old*
 images/
 guides/
+temp/
 *.acn
 *.acr
 *.alg
