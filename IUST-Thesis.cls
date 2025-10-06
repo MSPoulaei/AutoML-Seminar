@@ -119,7 +119,7 @@
 \fi	
 \vskip 1cm
 \par
-{\Large\bfseries{\large\bfseries   \@name\ \ \@surname}}
+{\Large\bfseries{\large\bfseries   \@name\ \@surname}}
 \par
 \vskip 15mm
 \large
@@ -402,7 +402,7 @@ $\Box$ بهره‌برداری از این پایان‌نامه تا تاریخ
 \vskip 15mm
 {\bfseries\latinby}\par
 {\large %\supervisorfont
-\rm\@latinname \; \@latinsurname}\par
+\rm\@latinname \ \@latinsurname}\par
 
 \vskip 15mm
 
