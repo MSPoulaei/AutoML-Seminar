@@ -49,3 +49,5 @@ temp/
 .bak 
 .mtc
 build/
+context/
+prompt.txt
