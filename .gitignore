@@ -50,4 +50,4 @@ temp/
 .mtc
 build/
 context/
-prompt.txt
+prompt*.txt
