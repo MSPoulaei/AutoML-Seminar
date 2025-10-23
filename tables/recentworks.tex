@@ -1,29 +1,29 @@
 \begin{table}[t]
-  \centering
-  \footnotesize
-  \setlength{\tabcolsep}{3pt}
-  \renewcommand{\arraystretch}{1.2}
-  \begin{tabularx}{\textwidth}{@{} Y c c c c c c l @{}}
-    \toprule
-    عنوان                                                            & عامل & روش سنتی & خروجی                & دانش خارجی & فضای جستجو & بدون آموزش & وظیفه       \\
-    \midrule
-    \lr{LLM for HPO}\cite{zhang2023usingLLMforHPO}                   & تک   & —        & واژنامه                  & \xmark     & اختیاری    & \xmark     & \lr{HPO}\   \\
-    \lr{GENIUS}\cite{zheng2023GENIUS}                                & تک   & —        & واژنامه                  & \xmark     & بله        & \xmark     & \lr{NAS}    \\
-    \lr{LLMATIC}\cite{LLMatic2024}                                   & تک   & EA       & کد                       & \xmark     & خیر        & \xmark     & \lr{NAS}    \\
-    \lr{LLAMA-NAS}\cite{sarah2024llamaNAS}                           & تک   & EA       & واژنامه                  & \xmark     & بله        & \xmark     & \lr{NAS}    \\
-    \lr{Text to ML}\cite{xu2024largeTextToML}                        & چند  & —        & کد                       & \xmark     & خیر        & \cmark     & \lr{AutoML} \\
-    \lr{AgentHPO}\cite{liu2025agenthpo}                              & چند  & —        & واژنامه                  & \xmark     & بله        & \xmark     & \lr{HPO}    \\
-    \lr{AutoML-Agent}\cite{trirat2025automlagent}                    & چند  & —        & کد                       & \cmark     & خیر        & \cmark     & \lr{AutoML} \\
-    \lr{LLAMBO}\cite{liu2024LLAMBO}                                  & چند  & BO       & متن                      & \xmark     & بله        & \cmark     & \lr{HPO}    \\
-    \lr{Nader}\cite{Yang2025NADER}                                   & چند  & —        & درخت                     & \cmark     & بله        & \xmark     & \lr{NAS}    \\
-    \lr{RZ-NAS}\cite{ji2025RZNAS}                                    & تک   & EA       & کد\textsuperscript{\dag} & \xmark     & بله        & \cmark     & \lr{NAS}    \\
-    \lr{EvoPrompting}\cite{chen2023Evoprompting}                     & تک   & EA       & کد                       & \xmark     & خیر        & \xmark     & \lr{NAS}    \\
-    \lr{AutoML-GPT}\cite{zhang2023AutomlGPTAutomaticMachineLearning} & تک   & —        & کد                       & \xmark     & بله        & \xmark     & \lr{AutoML} \\
-    \lr{HuggingGPT}\cite{shen2023HuggingGPT}                         & چند  & —        & کد                       & \cmark     & خیر        & \xmark     & \lr{AutoML} \\
-    \lr{GPT-NAS}\cite{Yu2025GPTNAS}                                  & تک   & EA       & درخت                     & \xmark     & خیر        & \xmark     & \lr{NAS}    \\
-    \lr{ML Copilot}\cite{zhang-etal-2024-MLCopilot}                  & چند  & —        & متن                      & \cmark     & خیر        & \xmark     & \lr{AutoML} \\
-    \bottomrule
-  \end{tabularx}
-  \caption[مقایسهٔ فشردهٔ مقالات مبتنی بر \lr{LLM}]{مقایسهٔ فشردهٔ مقالات مبتنی بر \lr{LLM}. \lr{EA}=الگوریتم‌های تکاملی، \lr{BO}=بهینه‌سازی بیزی. نشانه‌ها:  \textsuperscript{\dag}=تولید کد + واژنامه.}
-  \label{tab:recent-works}
+    \centering
+    \footnotesize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{} Y c c c c c c l @{}}
+        \toprule
+        عنوان                                                            & عامل & روش سنتی & خروجی                    & دانش خارجی & فضای جستجو & بدون آموزش & وظیفه       \\
+        \midrule
+        \lr{LLM for HPO}\cite{zhang2023usingLLMforHPO}                   & تک   & —        & واژنامه                  & \xmark     & اختیاری    & \xmark     & \lr{HPO}\   \\
+        \lr{GENIUS}\cite{zheng2023GENIUS}                                & تک   & —        & واژنامه                  & \xmark     & بله        & \xmark     & \lr{NAS}    \\
+        \lr{LLMATIC}\cite{LLMatic2024}                                   & تک   & EA       & کد                       & \xmark     & خیر        & \xmark     & \lr{NAS}    \\
+        \lr{LLAMA-NAS}\cite{sarah2024llamaNAS}                           & تک   & EA       & واژنامه                  & \xmark     & بله        & \xmark     & \lr{NAS}    \\
+        \lr{Text to ML}\cite{xu2024largeTextToML}                        & چند  & —        & کد                       & \xmark     & خیر        & \cmark     & \lr{AutoML} \\
+        \lr{AgentHPO}\cite{liu2025agenthpo}                              & چند  & —        & واژنامه                  & \xmark     & بله        & \xmark     & \lr{HPO}    \\
+        \lr{AutoML-Agent}\cite{trirat2025automlagent}                    & چند  & —        & کد                       & \cmark     & خیر        & \cmark     & \lr{AutoML} \\
+        \lr{LLAMBO}\cite{liu2024LLAMBO}                                  & چند  & BO       & متن                      & \xmark     & بله        & \cmark     & \lr{HPO}    \\
+        \lr{Nader}\cite{Yang2025NADER}                                   & چند  & —        & درخت                     & \cmark     & بله        & \xmark     & \lr{NAS}    \\
+        \lr{RZ-NAS}\cite{ji2025RZNAS}                                    & تک   & EA       & کد\textsuperscript{\dag} & \xmark     & بله        & \cmark     & \lr{NAS}    \\
+        \lr{EvoPrompting}\cite{chen2023Evoprompting}                     & تک   & EA       & کد                       & \xmark     & خیر        & \xmark     & \lr{NAS}    \\
+        \lr{AutoML-GPT}\cite{zhang2023AutomlGPTAutomaticMachineLearning} & تک   & —        & کد                       & \xmark     & بله        & \xmark     & \lr{AutoML} \\
+        \lr{HuggingGPT}\cite{shen2023HuggingGPT}                         & چند  & —        & کد                       & \cmark     & خیر        & \xmark     & \lr{AutoML} \\
+        \lr{GPT-NAS}\cite{Yu2025GPTNAS}                                  & تک   & EA       & درخت                     & \xmark     & خیر        & \xmark     & \lr{NAS}    \\
+        \lr{ML Copilot}\cite{zhang-etal-2024-MLCopilot}                  & چند  & —        & متن                      & \cmark     & خیر        & \xmark     & \lr{AutoML} \\
+        \bottomrule
+    \end{tabularx}
+    \caption[مقایسه فشرده مقالات مبتنی بر \lr{LLM}]{مقایسه فشرده مقالات مبتنی بر \lr{LLM}. \lr{EA}=الگوریتم‌های تکاملی، \lr{BO}=بهینه‌سازی بیزی. نشانه‌ها:  \textsuperscript{\dag}=تولید کد + واژنامه.}
+    \label{tab:recent-works}
 \end{table}

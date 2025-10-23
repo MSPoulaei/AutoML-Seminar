@@ -11,20 +11,12 @@
 \persianfootnote{ابرپارامترها}\LTRfootnote{Hyperparameters} پارامترهایی در مدل یادگیری ماشین هستند که مقدار آن‌ها پیش از آغاز فرایند آموزش تنظیم می‌شود (برخلاف پارامترها یا وزن‌ها که در طول آموزش یادگرفته می‌شوند). بهینه‌سازی ابرپارامتر فرایند یافتن ترکیبی از ابرپارامترها است که منجر به بهترین \persianfootnote{کارایی}\LTRfootnote{performance} مدل بر روی یک مجموعه داده اعتبارسنجی می‌شود. روش‌های متداول برای این کار شامل \persianfootnote{جستجوی شبکه‌ای}\LTRfootnote{Grid Search}، \persianfootnote{جستجوی تصادفی}\LTRfootnote{Random Search} و بهینه‌سازی بیزی است. این فرایند به دلیل \persianfootnote{هزینه محاسباتی}\LTRfootnote{computational cost} بالای ارزیابی هر \persianfootnote{پیکربندی}\LTRfootnote{configuration}، بسیار چالش‌برانگیز است.
 
 \begin{align}
-\lambda^\star &= \arg\min_{\lambda}\; \mathcal{L}_V^\star(\lambda)
-= \arg\min_{\lambda}\; \mathcal{L}_V\!\big(\lambda, \mathbf{w}^\star(\lambda)\big), \\
-\text{s.t.}\quad \mathbf{w}^\star(\lambda) &= \arg\min_{\mathbf{w}}\; \mathcal{L}_T(\lambda, \mathbf{w}) .
+    \lambda^\star                              & = \arg\min_{\lambda}\; \mathcal{L}_V^\star(\lambda)
+    = \arg\min_{\lambda}\; \mathcal{L}_V\!\big(\lambda, \mathbf{w}^\star(\lambda)\big) \label{eq:hpo-outer},                        \\
+    \text{s.t.}\quad \mathbf{w}^\star(\lambda) & = \arg\min_{\mathbf{w}}\; \mathcal{L}_T(\lambda, \mathbf{w}) \label{eq:hpo-inner}.
 \end{align}
 
-توضیح کوتاه:
-در این فرمول:
-- $\lambda$: بردار ابرپارامترها
-- $\mathbf{w}$: پارامترهای قابل‌آموزش مدل
-- $\mathcal{L}_T$: تابع زیان روی داده‌های آموزش (Train)
-- $\mathcal{L}_V$: تابع زیان/معیار روی داده‌های اعتبارسنجی (Validation)
-- $\mathbf{w}^\star(\lambda)$: وزن‌های بهینه‌ی حاصل از آموزش با ابرپارامترِ $\lambda$
-معنا: ابتدا برای هر $\lambda$ مدل را با کمینه‌کردن $\mathcal{L}_T$ آموزش می‌دهیم تا $\mathbf{w}^\star(\lambda)$ به‌دست آید؛
-سپس $\lambda$ای را برمی‌گزینیم که $\mathcal{L}_V$ روی مجموعه‌ی اعتبارسنجی را کمینه کند.
+در \textbf{معادله} \eqref{eq:hpo-outer}، هدف کمینه‌کردن زیان اعتبارسنجی با پارامترهای پاسخ بهینه $\mathcal{L}_V^\star$ است؛ این کمینه‌سازی زمانی معنا دارد که \textbf{معادله} \eqref{eq:hpo-inner} تا همگرایی حل شده باشد. در این فرمول‌ها، $\mathcal{L}_T$ و $\mathcal{L}_V$ به‌ترتیب اهداف آموزش و اعتبارسنجی هستند و $\lambda$ و $\mathbf{w}$ نیز به‌ترتیب ابرپارامترها و پارامترهای مدل‌اند. بهینه‌سازی ابرپارامتر می‌تواند به‌صورت \textbf{ترتیبی} انجام شود؛ بدین معنا که پیشنهاد $\lambda_n$ به دنباله مقادیر قبلی $\{\lambda_1,\lambda_2,\ldots,\lambda_{n-1}\}$ و زیان‌های اعتبارسنجی متناظرشان وابسته است.
 
 \subsection{جستجوی معماری شبکه عصبی}
 جستجوی معماری عصبی یکی از زیرشاخه‌های یادگیری ماشین خودکار است که به طور خاص بر خودکارسازی طراحی معماری \persianfootnote{شبکه‌های عصبی عمیق}\LTRfootnote{Deep Neural Networks} تمرکز دارد. به جای تکیه بر \persianfootnote{شهود}\LTRfootnote{intuition} و طراحی دستی توسط متخصصان، جستجوی معماری عصبی از \persianfootnote{الگوریتم‌های جستجو}\LTRfootnote{search algorithms} (مانند \persianfootnote{یادگیری تقویتی}\LTRfootnote{Reinforcement Learning} یا \persianfootnote{روش‌های تکاملی}\LTRfootnote{evolutionary methods}) برای کاوش در \persianfootnote{فضای طراحی}\LTRfootnote{design space} وسیع معماری‌ها استفاده می‌کند. هدف، یافتن معماری‌ای است که بهترین توازن را میان دقت و \persianfootnote{کارایی محاسباتی}\LTRfootnote{computational efficiency} برقرار کند.
@@ -33,7 +25,7 @@
 مدل‌های زبانی بزرگ مدل‌های زبانی هستند که با استفاده از معماری ترنسفورمر و بر روی حجم عظیمی از داده‌های متنی آموزش دیده‌اند. این مدل‌ها دارای میلیاردها پارامتر هستند و توانایی‌های شگفت‌انگیزی در \persianfootnote{درک زمینه}\LTRfootnote{understanding context}، تولید متن \persianfootnote{منسجم}\LTRfootnote{coherent} و استدلال از خود نشان می‌دهند.
 
 \subsection{تاریخچه}
-توسعه مدل‌های زبانی بزرگ با معرفی معماری ترنسفورمر \cite{vaswani2017attention} شتاب گرفت. مدل‌هایی مانند BERT \cite{devlin2019bert} و GPT \cite{brown2020language} \persianfootnote{چارچوب نظری}\LTRfootnote{paradigm} \persianfootnote{پیش‌آموزش}\LTRfootnote{pre-training} و \persianfootnote{ریزتنظیم}\LTRfootnote{fine-tuning} را تثبیت کردند. نسل‌های بعدی این مدل‌ها، با افزایش چشمگیر \persianfootnote{مقیاس}\LTRfootnote{scale} داده و پارامترها، به توانایی‌های \persianfootnote{یادگیری درون-متنی}\LTRfootnote{In-Context Learning (ICL)} دست یافتند که به آن‌ها اجازه می‌دهد وظایف جدید را بدون ریزتنظیم و تنها با دیدن چند مثال در \persianfootnote{دستور}\LTRfootnote{prompt} انجام دهند.
+توسعه مدل‌های زبانی بزرگ با معرفی معماری ترنسفورمر \cite{vaswani2017attention} شتاب گرفت. مدل‌هایی مانند BERT \cite{devlin2019bert} و GPT \cite{brown2020language} \persianfootnote{چارچوب نظری}\LTRfootnote{paradigm} \persianfootnote{پیش‌آموزش}\LTRfootnote{pre-training} و \persianfootnote{ریزتنظیم}\LTRfootnote{fine-tuning} را تثبیت کردند. نسل‌های بعدی این مدل‌ها، با افزایش چشمگیر \persianfootnote{مقیاس}\LTRfootnote{scale} داده و پارامترها، به توانایی‌های \persianfootnote{یادگیری زمینه‌ای}\LTRfootnote{In-Context Learning (ICL)} دست یافتند که به آن‌ها اجازه می‌دهد وظایف جدید را بدون ریزتنظیم و تنها با دیدن چند مثال در \persianfootnote{دستور}\LTRfootnote{prompt} انجام دهند.
 
 \subsection{معماری}
 پایه و اساس اکثر مدل‌های زبانی بزرگ مدرن، معماری ترنسفورمر است که بر مکانیزم \persianfootnote{توجه خودی}\LTRfootnote{self-attention} تکیه دارد. این مکانیزم به مدل اجازه می‌دهد تا \persianfootnote{وابستگی‌های دوربرد}\LTRfootnote{long-range dependencies} را در متن مدل کند و به بخش‌های مختلف ورودی وزن‌های متفاوتی اختصاص دهد. مدل‌ها معمولاً از پشته‌ای از لایه‌های \persianfootnote{رمزگذار}\LTRfootnote{encoder} (مانند \lr{BERT}) یا \persianfootnote{رمزگشا}\LTRfootnote{decoder} (مانند \lr{GPT}) یا هر دو (مانند \lr{T5}) تشکیل شده‌اند \cite{vaswani2017attention}.
@@ -51,8 +43,7 @@
 یک سیستم  شامل یک عامل واحد است که تمام وظایف ادراک، استدلال و عمل را به تنهایی انجام می‌دهد. در زمینه یادگیری ماشین خودکار، این می‌تواند یک عامل مبتنی بر مدل زبانی بزرگ باشد که کل خط لوله بهینه‌سازی را از ابتدا تا انتها مدیریت می‌کند \cite{wang2024survey}.
 
 \subsection[چندعاملی]{\persianfootnote{چندعاملی}\LTRfootnote{Multi-Agent}}
-سیستم‌های چندعاملی شامل دو یا چند عامل هستند که در یک محیط مشترک با یکدیگر \persianfootnote{تعامل}\LTRfootnote{interact} می‌کنند. این تعامل می‌تواند \persianfootnote{همکارانه}\LTRfootnote{collaborative} (برای دستیابی به یک هدف مشترک) یا \persianfootnote{رقابتی}\LTRfootnote{competitive} باشد. در یادگیری ماشین خودکار، می‌توان از سیستم‌های چندعاملی برای \persianfootnote{تفکیک وظایف}\LTRfootnote{task decomposition} استفاده کرد؛ برای مثال، یک عامل متخصص تحلیل داده، یک عامل متخصص \persianfootnote{تولید معماری}\LTRfootnote{architecture generation} و یک عامل \persianfootnote{منتقد}\LTRfootnote{critic} برای ارزیابی نتایج \cite{wang2024survey}.
-
+سیستم‌های چندعاملی شامل دو یا چند عامل هستند که در یک محیط مشترک با یکدیگر \persianfootnote{تعامل}\LTRfootnote{interact} می‌کنند. این تعامل می‌تواند \persianfootnote{همکارانه}\LTRfootnote{collaborative} (برای دستیابی به یک هدف مشترک)، \persianfootnote{رقابتی}\LTRfootnote{competitive}، یا ترکیبی از هر دو باشد. در مسائل پیچیده، بهره‌گیری از چند عامل امکان \persianfootnote{تفکیک وظایف}\LTRfootnote{task decomposition}، موازی‌سازی، و افزایش پایداری در برابر خطا را فراهم می‌کند. برای نمونه، یک عامل متخصص تحلیل داده، یک عامل مسئول \persianfootnote{برنامه‌ریزی/تولید راه‌حل}\LTRfootnote{planning/solution generation}، و یک عامل \persianfootnote{منتقد}\LTRfootnote{critic} وظیفه ارزیابی خروجی و ارائه بازخورد را بر عهده می‌گیرند؛ گاه یک عامل \persianfootnote{هماهنگ‌کننده}\LTRfootnote{coordinator} نیز برای زمان‌بندی و حل تعارض‌ها \LTRfootnote{conflict resolution} به کار می‌رود. هماهنگی میان عامل‌ها می‌تواند متمرکز یا غیرمتمرکز باشد و معمولاً از طریق پیام‌رسانی، اشتراک حافظه، یا پروتکل‌های \persianfootnote{ارتباطی}\LTRfootnote{communication protocols} انجام می‌شود. از چالش‌های کلیدی می‌توان به تعریف اهداف/پاداش‌ها، تخصیص منابع، و مدیریت ناهمگونی مهارت‌ها اشاره کرد \cite{wang2024survey}.
 \section[تولید تقویت‌شده با بازیابی]{\persianfootnote{تولید تقویت‌شده با بازیابی}\LTRfootnote{Retrieval-Augmented Generation (RAG)}}
 تولید تقویت‌شده با بازیابی \cite{Lewis2020RAG} روشی است که مدل‌های زبانی بزرگ را با یک \persianfootnote{سازوکار بازیابی اطلاعات}\LTRfootnote{information retrieval mechanism} خارجی ترکیب می‌کند. به جای تکیه صرف بر دانش پارامتری (ذخیره شده در وزن‌های مدل)، تولید تقویت‌شده با بازیابی ابتدا اطلاعات مرتبط را از یک \persianfootnote{مجموعه متون}\LTRfootnote{corpus} یا \persianfootnote{پایگاه دانش}\LTRfootnote{knowledge base} بازیابی می‌کند و سپس این اطلاعات را به مدل زبانی بزرگ می‌دهد تا پاسخ نهایی را بر اساس آن تولید کند. این روش به کاهش \persianfootnote{توهم}\LTRfootnote{hallucination} و افزایش دقت و \persianfootnote{به‌روز بودن}\LTRfootnote{up-to-dateness} اطلاعات کمک می‌کند \cite{xia2025ragselfreasoning}.
 
