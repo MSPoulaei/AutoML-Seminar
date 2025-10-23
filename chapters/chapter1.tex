@@ -2,9 +2,22 @@
 
 \chapter{مقدمه}
 \thispagestyle{empty}
+
 \section{شرح مسأله}
+فرایند ساخت و بهینه‌سازی مدل‌های یادگیری ماشین به‌طور سنتی، فرایندی پیچیده، زمان‌بر و نیازمند دانش تخصصی عمیق است. متخصصان علم داده ناچارند زمان قابل توجهی را صرف \persianfootnote{مهندسی ویژگی}\LTRfootnote{feature engineering}، \persianfootnote{انتخاب مدل}\LTRfootnote{model selection}، و \persianfootnote{تنظیم ابرپارامترها}\LTRfootnote{hyperparameter tuning} کنند. \persianfootnote{یادگیری ماشین خودکار}\LTRfootnote{Automated Machine Learning (AutoML)} با هدف خودکارسازی این \persianfootnote{خط لوله}\LTRfootnote{pipeline} و \persianfootnote{مردمی‌سازی}\LTRfootnote{democratization} یادگیری ماشین پدیدار شد. با این حال، روش‌های سنتی یادگیری ماشین خودکار، مانند \persianfootnote{بهینه‌سازی بیزی}\LTRfootnote{Bayesian optimization} یا \persianfootnote{الگوریتم‌های تکاملی}\LTRfootnote{evolutionary algorithms}، اغلب به عنوان  بهینه‌سازهای \persianfootnote{جعبه‌سیاه}\LTRfootnote{black-box} عمل می‌کنند که فاقد تفسیرپذیری بوده و در انطباق با مسائل جدید یا بهره‌برداری از دانش برون‌حوزه‌ای دچار چالش هستند.
+
+در سال‌های اخیر، ظهور \persianfootnote{مدل‌های زبانی بزرگ}\LTRfootnote{Large Language Models (LLMs)} با توانایی‌های چشمگیر در \persianfootnote{درک زبان طبیعی}\LTRfootnote{Natural Language Understanding (NLU)}، استدلال و تولید کد، پارادایم جدیدی را معرفی کرده است. این مدل‌ها پتانسیل آن را دارند که از بهینه‌سازهای کور فراتر رفته و به عنوان \persianfootnote{عامل‌}\LTRfootnote{agent}های هوشمند عمل کنند. این عامل‌ها می‌توانند با استفاده از دانش پیشین خود، استدلال گام‌به‌گام، و حتی تعامل با محیط‌های اجرایی و \persianfootnote{پایگاه‌های دانش}\LTRfootnote{knowledge bases}، فرایند یادگیری ماشین خودکار را به شیوه‌ای \persianfootnote{خودمختار}\LTRfootnote{autonomous}، \persianfootnote{تطبیق‌پذیر}\LTRfootnote{adaptive} و \persianfootnote{آگاه از زمینه}\LTRfootnote{context-aware} هدایت کنند. مسئله اصلی که این سمینار به آن می‌پردازد، بررسی این تقاطع نوظهور است: چگونه می‌توان از مدل‌های زبانی بزرگ عامل-محور برای دگرگونی و ارتقای نسل بعدی سیستم‌های یادگیری ماشین خودکار بهره جست؟
+
 \section{معرفی حوزه سمینار}
+این سمینار در نقطه تلاقی سه حوزه پژوهشی کلیدی قرار دارد: \persianfootnote{یادگیری ماشین خودکار}\LTRfootnote{AutoML}، \persianfootnote{مدل‌های زبانی بزرگ}\LTRfootnote{LLMs}، و \persianfootnote{سیستم‌های عامل-محور}\LTRfootnote{Agent-based Systems}.
+
+حوزه اول، \persianfootnote{یادگیری ماشین خودکار}\LTRfootnote{AutoML}، بر توسعه روش‌هایی برای خودکارسازی کامل خط لوله یادگیری ماشین تمرکز دارد. این حوزه شامل زیرشاخه‌های مهمی چون \persianfootnote{بهینه‌سازی ابرپارامترها}\LTRfootnote{Hyperparameter Optimization (HPO)} و \persianfootnote{جستجوی معماری عصبی}\LTRfootnote{Neural Architecture Search (NAS)} است که هر دو به دلیل \persianfootnote{پیچیدگی محاسباتی}\LTRfootnote{computational complexity} بالا و \persianfootnote{فضای جستجوی}\LTRfootnote{search space} گسترده، چالش‌برانگیز هستند.
+
+حوزه دوم، مدل‌های زبانی بزرگ، به مدل‌های یادگیری عمیق با \persianfootnote{معماری ترنسفورمر}\LTRfootnote{Transformer architecture} اشاره دارد که بر روی \persianfootnote{پیکره‌های متنی}\LTRfootnote{text corpora} عظیم آموزش دیده‌اند. توانایی این مدل‌ها در درک دستورالعمل‌های پیچیده و تولید خروجی‌های منسجم، آن‌ها را به ابزاری قدرتمند برای وظایف نیازمند استدلال تبدیل کرده است.
+
+حوزه سوم، \persianfootnote{سیستم‌های عامل-محور}\LTRfootnote{Agent-based Systems}، به توسعه موجودیت‌های محاسباتی مستقلی می‌پردازد که می‌توانند محیط خود را ادراک کنند، بر اساس دانش و اهداف خود تصمیم‌گیری کنند و برای رسیدن به آن اهداف اقدام نمایند. ترکیب مدل‌های زبانی بزرگ به عنوان مغز متفکر یک عامل، منجر به ظهور عامل‌های زبانی شده است که می‌توانند وظایف پیچیده‌ای را در محیط‌های دیجیتال به انجام رسانند.
+
+این سمینار به بررسی این موضوع می‌پردازد که چگونه می‌توان با ادغام این سه حوزه، سیستم‌های یادگیری ماشین خودکار هوشمندتری ساخت که نه تنها \persianfootnote{پیکربندی‌ها}\LTRfootnote{configurations} را بهینه می‌کنند، بلکه فرایند جستجو را استدلال می‌کنند، از ادبیات پژوهشی می‌آموزند و کد اجرایی تولید می‌کنند.
 
 \section{ساختار گزارش}
-%TODO: revise the section 2,3 explanations
-این گزارش در ۴ فصل تهیه شده است. در فصل اول به بیان مقدمه و شرح مسئله پرداخته ایم. در فصل دوم مبانی و مفاهیم حوزه یادگیری ماشین و بهینه‌سازی ابرپارامترها شرح داده شده است. در فصل سوم روش های مختلف برای جستجوی معماری شبکه عصبی بررسی و مقایسه شده است. در فصل چهارم نیز به جمع‌بندی و نتیجه‌گیری از مطالب آورده شده در گزارش پرداخته‌ایم.
+این گزارش در ۴ فصل تهیه شده است. در فصل اول به بیان مقدمه و شرح مسئله پرداخته ایم. در فصل دوم مبانی و مفاهیم حوزه یادگیری ماشین خودکار، بهینه‌سازی ابرپارامترها و مدل های زبانی بزرگ عامل محور شرح داده شده است. در فصل سوم روش های مختلف از دیدگاه های عامل، دانش و نوع خروجی بررسی و مقایسه شده است. در فصل چهارم نیز به جمع‌بندی، نتیجه‌گیری از مطالب آورده شده در گزارش و کارهای آینده پرداخته‌ایم.
