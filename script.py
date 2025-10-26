@@ -13,7 +13,7 @@ all_word_pairs = []
 # Loop through all .tex files in the specified directory
 for root, dirs, files in os.walk(directory_path):
     for filename in files:
-        if filename.endswith(".tex"):
+        if filename.endswith(".tex") and not filename.endswith('_old.tex'):
             file_path = os.path.join(root, filename)
             
             # Read the LaTeX content from the file
@@ -28,7 +28,7 @@ for root, dirs, files in os.walk(directory_path):
 
 # Sort the combined word pairs alphabetically
 sorted_word_pairs = sorted(all_word_pairs, key=lambda x: x[0])
-
+print(f'Total unique word pairs found: {len(sorted_word_pairs)}')
 # Create the dictionary files
 with open('dic/dicen2fa.tex', 'w', encoding='utf-8') as dict_file_en2fa:
     with open('dic/dicfa2en.tex', 'w', encoding='utf-8') as dict_file_fa2en:

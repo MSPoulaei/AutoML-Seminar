@@ -3,10 +3,27 @@
 \thispagestyle{empty}
 \section{مقدمه}
 برای درک عمیق روش‌های نوین ارائه شده در این گزارش، ضروری است که با مفاهیم و تعاریف پایه‌ای در حوزه‌های یادگیری ماشین خودکار، مدل‌های زبانی بزرگ و سیستم‌های عامل-محور آشنا شویم. این فصل به مرور این مبانی نظری اختصاص دارد و به عنوان سنگ بنایی برای تحلیل‌های ارائه شده در فصل سوم عمل خواهد کرد.
-
 \section{یادگیری خودکار ماشین}
-یادگیری ماشین خودکار به فرایند خودکارسازی وظایف تکراری و تخصصی در طراحی و استقرار مدل‌های یادگیری ماشین اطلاق می‌شود. هدف نهایی یادگیری ماشین خودکار، کاهش نیاز به دخالت متخصصان انسانی و تسریع فرایند کشف و اعتبارسنجی مدل‌های کارآمد است. این فرایند معمولاً شامل مراحلی چون \persianfootnote{پیش‌پردازش داده}\LTRfootnote{data preprocessing}، مهندسی ویژگی، انتخاب مدل و بهینه‌سازی ابرپارامتر می‌باشد.
-
+یادگیری ماشین خودکار به فرایند خودکارسازی وظایف تکراری و تخصصی در طراحی و استقرار مدل‌های یادگیری ماشین اطلاق می‌شود. هدف نهایی یادگیری ماشین خودکار، کاهش نیاز به دخالت متخصصان انسانی و تسریع فرایند کشف و اعتبارسنجی مدل‌های کارآمد است. این فرایند معمولاً شامل مراحلی چون \persianfootnote{پیش‌پردازش داده}\LTRfootnote{data preprocessing}، مهندسی ویژگی، انتخاب مدل و بهینه‌سازی ابرپارامتر می‌باشد. همانطور که در شکل \ref{fig:automl} نشان داده شده است، چارچوب یادگیری ماشین خودکار شامل مراحل کلیدی از پیش‌پردازش داده تا استقرار مدل است. هر مرحله می‌تواند با استفاده از الگوریتم‌ها و تکنیک‌های مختلف خودکارسازی شود تا بهینه‌ترین مدل برای یک مسئله خاص یادگیری ماشین شناسایی گردد.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/automl.png}
+    \caption[چارچوب یادگیری ماشین خودکار]{
+        چارچوب یادگیری ماشین خودکار
+         \cite{salehin2024automl}.
+    }
+    \label{fig:automl}
+\end{figure}
+\noindent\textbf{مسئله \lr{CASH}: صورت‌بندی و تفسیر یکپارچه.}
+در یادگیری ماشین خودکار، مسئلهٔ \lr{CASH}\LTRfootnote{Combined Algorithm Selection and Hyperparameter Optimization} به‌دنبال یافتن زوج \((A^{*}, \lambda^{*})\) است که با انتخاب هم‌زمان نوع الگوریتم و پیکربندی ابرپارامترهای آن، کمترین خطا را روی داده‌های اعتبارسنجی (مثلاً در اعتبارسنجی متقابل \(k\)-بخشی) حاصل کند \cite{thornton2013autoweka}:
+\begin{equation}
+\label{eq:cash}
+A^{*}, \lambda^{*} \in
+\operatorname*{arg\,min}_{A^{(j)} \in \mathcal{A},\, \lambda \in \Lambda^{(j)}}
+\frac{1}{k}\sum_{i=1}^{k}
+\mathcal{L}\!\left(A^{(j)}_{\lambda},\, D^{(i)}_{\mathrm{train}},\, D^{(i)}_{\mathrm{valid}}\right).
+\end{equation}
+که در آن \(\mathcal{A}\) مجموعهٔ الگوریتم‌های کاندید است و برای هر \(A^{(j)} \in \mathcal{A}\) فضای ابرپارامتر \(\Lambda^{(j)}\) تعریف می‌شود؛ \(A^{(j)}_{\lambda}\) نمونه‌سازی الگوریتم \(j\) با پیکربندی \(\lambda \in \Lambda^{(j)}\) است؛ \(D^{(i)}_{\mathrm{train}}\) و \(D^{(i)}_{\mathrm{valid}}\) به‌ترتیب داده‌های آموزش و اعتبارسنجی در تکرار \(i\) از اعتبارسنجی متقابل \(k\)-بخشی‌اند؛ \(k\) تعداد بخش‌هایی است که خطا روی آن‌ها میانگین‌گیری می‌شود؛ و \(\mathcal{L}(\cdot)\) تابع زیانی است که باید کمینه شود (برای معیارهای حداکثری مانند دقت یا \lr{AUC} می‌توان از منفیِ امتیاز به‌عنوان زیان استفاده کرد). بدین‌ترتیب، جست‌وجو در \lr{CASH} هم‌زمان روی فضای انتخاب الگوریتم و فضای ابرپارامترهای هر الگوریتم انجام می‌شود تا زوج بهینه \((A^{*}, \lambda^{*})\) با بهترین عملکرد اعتبارسنجی به‌دست آید.
 \subsection{بهینه‌سازی ابرپارامتر}
 \persianfootnote{ابرپارامترها}\LTRfootnote{Hyperparameters} پارامترهایی در مدل یادگیری ماشین هستند که مقدار آن‌ها پیش از آغاز فرایند آموزش تنظیم می‌شود (برخلاف پارامترها یا وزن‌ها که در طول آموزش یادگرفته می‌شوند). بهینه‌سازی ابرپارامتر فرایند یافتن ترکیبی از ابرپارامترها است که منجر به بهترین \persianfootnote{کارایی}\LTRfootnote{performance} مدل بر روی یک مجموعه داده اعتبارسنجی می‌شود. روش‌های متداول برای این کار شامل \persianfootnote{جستجوی شبکه‌ای}\LTRfootnote{Grid Search}، \persianfootnote{جستجوی تصادفی}\LTRfootnote{Random Search} و بهینه‌سازی بیزی است. این فرایند به دلیل \persianfootnote{هزینه محاسباتی}\LTRfootnote{computational cost} بالای ارزیابی هر \persianfootnote{پیکربندی}\LTRfootnote{configuration}، بسیار چالش‌برانگیز است.
 
@@ -28,13 +45,31 @@
 توسعه مدل‌های زبانی بزرگ با معرفی معماری ترنسفورمر \cite{vaswani2017attention} شتاب گرفت. مدل‌هایی مانند BERT \cite{devlin2019bert} و GPT \cite{brown2020language} \persianfootnote{چارچوب نظری}\LTRfootnote{paradigm} \persianfootnote{پیش‌آموزش}\LTRfootnote{pre-training} و \persianfootnote{ریزتنظیم}\LTRfootnote{fine-tuning} را تثبیت کردند. نسل‌های بعدی این مدل‌ها، با افزایش چشمگیر \persianfootnote{مقیاس}\LTRfootnote{scale} داده و پارامترها، به توانایی‌های \persianfootnote{یادگیری زمینه‌ای}\LTRfootnote{In-Context Learning (ICL)} دست یافتند که به آن‌ها اجازه می‌دهد وظایف جدید را بدون ریزتنظیم و تنها با دیدن چند مثال در \persianfootnote{دستور}\LTRfootnote{prompt} انجام دهند.
 
 \subsection{معماری}
-پایه و اساس اکثر مدل‌های زبانی بزرگ مدرن، معماری ترنسفورمر است که بر مکانیزم \persianfootnote{توجه خودی}\LTRfootnote{self-attention} تکیه دارد. این مکانیزم به مدل اجازه می‌دهد تا \persianfootnote{وابستگی‌های دوربرد}\LTRfootnote{long-range dependencies} را در متن مدل کند و به بخش‌های مختلف ورودی وزن‌های متفاوتی اختصاص دهد. مدل‌ها معمولاً از پشته‌ای از لایه‌های \persianfootnote{رمزگذار}\LTRfootnote{encoder} (مانند \lr{BERT}) یا \persianfootnote{رمزگشا}\LTRfootnote{decoder} (مانند \lr{GPT}) یا هر دو (مانند \lr{T5}) تشکیل شده‌اند \cite{vaswani2017attention}.
-
+پایه و اساس اکثر مدل‌های زبانی بزرگ مدرن، معماری ترنسفورمر است که بر مکانیزم \persianfootnote{توجه خودی}\LTRfootnote{self-attention} تکیه دارد. این مکانیزم به مدل اجازه می‌دهد تا \persianfootnote{وابستگی‌های دوربرد}\LTRfootnote{long-range dependencies} را در متن مدل کند و به بخش‌های مختلف ورودی وزن‌های متفاوتی اختصاص دهد. همانطور که در شکل \ref{fig:transformer} نشان داده شده است، مدل‌ها معمولاً از پشته‌ای از لایه‌های \persianfootnote{رمزگذار}\LTRfootnote{encoder} (مانند \lr{BERT}) یا \persianfootnote{رمزگشا}\LTRfootnote{decoder} (مانند \lr{GPT}) یا هر دو (مانند \lr{T5}) تشکیل شده‌اند \cite{vaswani2017attention}.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/transf.png}
+    \caption[معماری ترنسفورمر]{
+        معماری ترنسفورمر
+        \cite{vaswani2017attention}.
+    }    
+    \label{fig:transformer}
+    
+\end{figure}
 \subsection{کاربردها}
-مدل‌های زبانی بزرگ کاربردهای متنوعی از جمله \persianfootnote{ترجمه ماشینی}\LTRfootnote{machine translation}~\cite{wang-etal-2023-document-level}، \persianfootnote{خلاصه‌سازی متن}\LTRfootnote{text summarization}، پرسش و پاسخ و تولید محتوا دارند~\cite{minaee2024large}. اخیراً، توانایی آن‌ها در \persianfootnote{تولید کد}\LTRfootnote{code generation}~\cite{gao2023pal} و حل مسائل منطقی~\cite{pan-etal-2023-logic}، درهای جدیدی را برای استفاده از آن‌ها در حوزه‌های فنی‌تر مانند مهندسی نرم‌افزار و یادگیری ماشین خودکار گشوده است.
+مدل‌های زبانی بزرگ کاربردهای متنوعی از جمله \persianfootnote{ترجمه ماشینی}\LTRfootnote{machine translation}~\cite{wang-etal-2023-document-level}، \persianfootnote{خلاصه‌سازی متن}\LTRfootnote{text summarization}، پرسش و پاسخ و تولید محتوا دارند. اخیراً، توانایی آن‌ها در \persianfootnote{تولید کد}\LTRfootnote{code generation}~\cite{gao2023pal} و حل مسائل منطقی~\cite{pan-etal-2023-logic}، درهای جدیدی را برای استفاده از آن‌ها در حوزه‌های فنی‌تر مانند مهندسی نرم‌افزار و یادگیری ماشین خودکار گشوده است.
 
 \subsection{تفکر و عمل}
-فراتر از تولید \persianfootnote{پاسخ‌های ایستا}\LTRfootnote{static responses}، مدل‌های زبانی بزرگ می‌توانند برای \persianfootnote{تفکر}\LTRfootnote{Reasoning} و \persianfootnote{عمل}\LTRfootnote{Action} نیز به کار روند. چارچوب‌هایی مانند ReAct \cite{yao2023react} نشان دادند که چگونه یک مدل زبانی بزرگ می‌تواند به صورت \persianfootnote{درهم‌تنیده}\LTRfootnote{interleaved}، \persianfootnote{ردپاهای استدلالی}\LTRfootnote{reasoning traces} (تفکر) و اقدامات (مانند جستجو در وب یا اجرای دستور) تولید کند. این قابلیت، سنگ بنای استفاده از مدل‌های زبانی بزرگ به عنوان هسته تصمیم‌گیرنده در عامل‌های خودمختار است.
+فراتر از تولید \persianfootnote{پاسخ‌های ایستا}\LTRfootnote{static responses}، مدل‌های زبانی بزرگ می‌توانند برای \persianfootnote{تفکر}\LTRfootnote{Reasoning} و \persianfootnote{عمل}\LTRfootnote{Action} نیز به کار روند. چارچوب‌هایی مانند \lr{ReAct} \cite{yao2023react} نشان دادند که چگونه یک مدل زبانی بزرگ می‌تواند به صورت \persianfootnote{درهم‌تنیده}\LTRfootnote{interleaved}، \persianfootnote{ردپاهای استدلالی}\LTRfootnote{reasoning traces} (تفکر) و اقدامات (مانند جستجو در وب یا اجرای دستور) تولید کند. این قابلیت، سنگ بنای استفاده از مدل‌های زبانی بزرگ به عنوان هسته تصمیم‌گیرنده در عامل‌های خودمختار است. شکل \ref{fig:react} نمونه‌ای از این چارچوب را نشان می‌دهد.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/react.png}
+    \caption[چارچوب ReAct]{
+        چارچوب ReAct
+        \cite{yao2023react}.
+    }
+    \label{fig:react}
+\end{figure}
 
 \section{عامل}
 در زمینه هوش مصنوعی، عامل به سیستمی اطلاق می‌شود که در یک \persianfootnote{محیط}\LTRfootnote{environment} قرار دارد، آن را از طریق \persianfootnote{حسگرها}\LTRfootnote{sensors} ادراک می‌کند و از طریق \persianfootnote{کنشگرها}\LTRfootnote{actuators} بر آن تأثیر می‌گذارد تا به اهداف خود دست یابد. عامل‌های زبانی نوع خاصی از عامل‌ها هستند که از مدل‌های زبانی بزرگ به عنوان موتور استدلال اصلی خود برای پردازش ادراکات (اغلب متنی)، \persianfootnote{برنامه‌ریزی}\LTRfootnote{planning} و انتخاب اقدام استفاده می‌کنند \cite{wang2024survey}.
@@ -43,10 +78,18 @@
 یک سیستم  شامل یک عامل واحد است که تمام وظایف ادراک، استدلال و عمل را به تنهایی انجام می‌دهد. در زمینه یادگیری ماشین خودکار، این می‌تواند یک عامل مبتنی بر مدل زبانی بزرگ باشد که کل خط لوله بهینه‌سازی را از ابتدا تا انتها مدیریت می‌کند \cite{wang2024survey}.
 
 \subsection[چندعاملی]{\persianfootnote{چندعاملی}\LTRfootnote{Multi-Agent}}
-سیستم‌های چندعاملی شامل دو یا چند عامل هستند که در یک محیط مشترک با یکدیگر \persianfootnote{تعامل}\LTRfootnote{interact} می‌کنند. این تعامل می‌تواند \persianfootnote{همکارانه}\LTRfootnote{collaborative} (برای دستیابی به یک هدف مشترک)، \persianfootnote{رقابتی}\LTRfootnote{competitive}، یا ترکیبی از هر دو باشد. در مسائل پیچیده، بهره‌گیری از چند عامل امکان \persianfootnote{تفکیک وظایف}\LTRfootnote{task decomposition}، موازی‌سازی، و افزایش پایداری در برابر خطا را فراهم می‌کند. برای نمونه، یک عامل متخصص تحلیل داده، یک عامل مسئول \persianfootnote{برنامه‌ریزی/تولید راه‌حل}\LTRfootnote{planning/solution generation}، و یک عامل \persianfootnote{منتقد}\LTRfootnote{critic} وظیفه ارزیابی خروجی و ارائه بازخورد را بر عهده می‌گیرند؛ گاه یک عامل \persianfootnote{هماهنگ‌کننده}\LTRfootnote{coordinator} نیز برای زمان‌بندی و حل تعارض‌ها \LTRfootnote{conflict resolution} به کار می‌رود. هماهنگی میان عامل‌ها می‌تواند متمرکز یا غیرمتمرکز باشد و معمولاً از طریق پیام‌رسانی، اشتراک حافظه، یا پروتکل‌های \persianfootnote{ارتباطی}\LTRfootnote{communication protocols} انجام می‌شود. از چالش‌های کلیدی می‌توان به تعریف اهداف/پاداش‌ها، تخصیص منابع، و مدیریت ناهمگونی مهارت‌ها اشاره کرد \cite{wang2024survey}.
+سیستم‌های چندعاملی شامل دو یا چند عامل هستند که در یک محیط مشترک با یکدیگر \persianfootnote{تعامل}\LTRfootnote{interact} می‌کنند. این تعامل می‌تواند \persianfootnote{همکارانه}\LTRfootnote{collaborative} (برای دستیابی به یک هدف مشترک)، \persianfootnote{رقابتی}\LTRfootnote{competitive}، یا ترکیبی از هر دو باشد. در مسائل پیچیده، بهره‌گیری از چند عامل امکان \persianfootnote{تفکیک وظایف}\LTRfootnote{task decomposition}، موازی‌سازی، و افزایش پایداری در برابر خطا را فراهم می‌کند. برای نمونه، یک عامل متخصص تحلیل داده، یک عامل مسئول \persianfootnote{برنامه‌ریزی/تولید راه‌حل}\LTRfootnote{planning/solution generation}، و یک عامل \persianfootnote{منتقد}\LTRfootnote{critic} وظیفه ارزیابی خروجی و ارائه بازخورد را بر عهده می‌گیرند؛ گاه یک عامل \persianfootnote{هماهنگ‌کننده}\LTRfootnote{coordinator} نیز برای زمان‌بندی و حل تعارض‌ها \LTRfootnote{conflict resolution} به کار می‌رود. هماهنگی میان عامل‌ها می‌تواند متمرکز یا غیرمتمرکز باشد و معمولاً از طریق پیام‌رسانی، اشتراک حافظه، یا \persianfootnote{پروتکل‌های ارتباطی}\LTRfootnote{communication protocols} انجام می‌شود. از چالش‌های کلیدی می‌توان به تعریف اهداف/پاداش‌ها، تخصیص منابع، و مدیریت ناهمگونی مهارت‌ها اشاره کرد \cite{wang2024survey}.
 \section[تولید تقویت‌شده با بازیابی]{\persianfootnote{تولید تقویت‌شده با بازیابی}\LTRfootnote{Retrieval-Augmented Generation (RAG)}}
-تولید تقویت‌شده با بازیابی \cite{Lewis2020RAG} روشی است که مدل‌های زبانی بزرگ را با یک \persianfootnote{سازوکار بازیابی اطلاعات}\LTRfootnote{information retrieval mechanism} خارجی ترکیب می‌کند. به جای تکیه صرف بر دانش پارامتری (ذخیره شده در وزن‌های مدل)، تولید تقویت‌شده با بازیابی ابتدا اطلاعات مرتبط را از یک \persianfootnote{مجموعه متون}\LTRfootnote{corpus} یا \persianfootnote{پایگاه دانش}\LTRfootnote{knowledge base} بازیابی می‌کند و سپس این اطلاعات را به مدل زبانی بزرگ می‌دهد تا پاسخ نهایی را بر اساس آن تولید کند. این روش به کاهش \persianfootnote{توهم}\LTRfootnote{hallucination} و افزایش دقت و \persianfootnote{به‌روز بودن}\LTRfootnote{up-to-dateness} اطلاعات کمک می‌کند \cite{xia2025ragselfreasoning}.
-
+تولید تقویت‌شده با بازیابی \cite{Lewis2020RAG} روشی است که مدل‌های زبانی بزرگ را با یک \persianfootnote{سازوکار بازیابی اطلاعات}\LTRfootnote{information retrieval mechanism} خارجی ترکیب می‌کند. به جای تکیه صرف بر دانش پارامتری (ذخیره شده در وزن‌های مدل)، تولید تقویت‌شده با بازیابی ابتدا اطلاعات مرتبط را از یک \persianfootnote{مجموعه متون}\LTRfootnote{corpus} یا \persianfootnote{پایگاه دانش}\LTRfootnote{knowledge base} بازیابی می‌کند و سپس این اطلاعات را به مدل زبانی بزرگ می‌دهد تا پاسخ نهایی را بر اساس آن تولید کند. این روش به کاهش \persianfootnote{توهم}\LTRfootnote{hallucination} و افزایش دقت و \persianfootnote{به‌روز بودن}\LTRfootnote{up-to-dateness} اطلاعات کمک می‌کند \cite{xia2025ragselfreasoning}.در شکل \ref{fig:rag}، چارچوب کلی تولید تقویت‌شده با بازیابی نشان داده شده است.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/rag.png}
+    \caption[چارچوب کلی تولید تقویت‌شده با بازیابی]{
+        چارچوب کلی تولید تقویت‌شده با بازیابی. این فرآیند شامل سه مرحله اصلی است: ۱) نمایه‌سازی، که در آن اسناد به قطعات برداری تبدیل و ذخیره می‌شوند؛ ۲) بازیابی، که در آن مرتبط‌ترین قطعات بر اساس شباهت معنایی با پرسش استخراج می‌شوند؛ و ۳) تولید، که در آن مدل زبانی بزرگ با استفاده از پرسش و قطعات بازیابی‌شده، پاسخ نهایی را تولید می‌کند
+        \cite{gao2023retrieval}.
+    }
+    \label{fig:rag}
+\end{figure}
 \subsection{پایگاه دانش}
 پایگاه دانش در تولید تقویت‌شده با بازیابی معمولاً مجموعه‌ای از \persianfootnote{اسناد}\LTRfootnote{documents} است. این اسناد اغلب به \persianfootnote{قطعات}\LTRfootnote{chunks} کوچکتر تقسیم شده و به صورت \persianfootnote{نمایش‌های برداری}\LTRfootnote{vector representations} (یا \persianfootnote{نهفتگی‌ها}\LTRfootnote{embeddings}) در یک \persianfootnote{پایگاه داده برداری}\LTRfootnote{vector database} ذخیره می‌شوند تا \persianfootnote{بازیابی مبتنی بر شباهت معنایی}\LTRfootnote{semantic similarity retrieval} به سرعت انجام شود.
 
