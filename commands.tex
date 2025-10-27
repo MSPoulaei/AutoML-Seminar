@@ -8,7 +8,7 @@
 % بسته‌‌ای برای ظاهر شدن شکل‌ها و تصاویر متن
 \usepackage{graphicx}
 % بسته‌ای برای رسم کادر
-\usepackage{framed} 
+\usepackage{framed}
 % بسته‌‌ای برای چاپ شدن خودکار تعداد صفحات در صفحه «معرفی پایان‌نامه»
 \usepackage{lastpage}
 % بسته‌ و دستوراتی برای ایجاد لینک‌های رنگی با امکان جهش
@@ -133,22 +133,22 @@
 \addtolength\mylenapp{\cftchapnumwidth}
 
 \setlength\cftpartnumwidth{\mylenprt}
-\setlength\cftchapnumwidth{\mylenchp}	
+\setlength\cftchapnumwidth{\mylenchp}
 
 \makeatletter
 {\def\thebibliography#1{\chapter*{\refname\@mkboth
-   {\uppercase{\refname}}{\uppercase{\refname}}}\list
-   {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}
-   \rightmargin\labelwidth
-   \advance\rightmargin\labelsep
-   \advance\rightmargin\bibindent
-   \itemindent -\bibindent
-   \listparindent \itemindent
-   \parsep \z@
-   \usecounter{enumi}}
-   \def\newblock{}
-   \sloppy
-   \sfcode`\.=1000\relax}}
+        {\uppercase{\refname}}{\uppercase{\refname}}}\list
+      {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}
+         \rightmargin\labelwidth
+         \advance\rightmargin\labelsep
+         \advance\rightmargin\bibindent
+         \itemindent -\bibindent
+         \listparindent \itemindent
+         \parsep \z@
+         \usecounter{enumi}}
+      \def\newblock{}
+      \sloppy
+      \sfcode`\.=1000\relax}}
 \makeatother
 
 

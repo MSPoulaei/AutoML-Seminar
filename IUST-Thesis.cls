@@ -295,7 +295,7 @@ $\Box$ بهره‌برداری از این پایان‌نامه تا تاریخ
 \newcommand\abstractPage{\newpage
 \thispagestyle{empty}
 \vskip 15mm
-{\noindent\bfseries چکیده}
+{\noindent\bfseries \textbf{چکیده}}
 \vspace{5mm}
 \par
 \noindent
