@@ -51,6 +51,6 @@ temp/
 build/
 context/
 prompt*.txt
-diagram/category.pptx
+diagram
 !main.pdf
 Seminar_Pre*

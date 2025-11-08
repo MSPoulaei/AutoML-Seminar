@@ -32,9 +32,9 @@
 
 \pagenumbering{harfi}
 \input{titles/faTitle}
-\tableofcontents
-
-\newpage
+\renewcommand{\listfigurename}{فهرست شکل‌ها}
+\tableofcontents \newpage
+\renewcommand{\listfigurename}{فهرست شکل‌ها}
 \listoffigures \newpage
 \listoftables  \newpage
 % \addcontentsline{toc}{chapter}{\listalgorithmname}
@@ -69,7 +69,7 @@
 %\baselineskip=.75cm
 \onehalfspacing
 \include{dic/dicfa2en}
-% \include{dic/dicen2fa}
+\include{dic/dicen2fa}
 \printindex
 \input{titles/enTitle}
 \label{LastPage}
